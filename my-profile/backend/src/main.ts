@@ -3,13 +3,21 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.enableCors(); // Critical for React to talk to Nest
-  await app.listen(3000);
+  app.enableCors({
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  });
+  await app.listen(process.env.PORT || 3001);
 }
-// Export for Vercel Serverless
+bootstrap();
+
 export default async (req: any, res: any) => {
   const app = await NestFactory.create(AppModule);
-  app.enableCors();
+  app.enableCors({
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  });
+  await app.init();
   const instance = app.getHttpAdapter().getInstance();
   return instance(req, res);
 };
