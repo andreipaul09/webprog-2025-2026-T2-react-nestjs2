@@ -1,9 +1,17 @@
 const { NestFactory } = require('@nestjs/core');
-const { AppModule } = require('../dist/app.module'); // Ensure this points to your compiled code
+
+let app;
 
 module.exports = async (req, res) => {
-  const app = await NestFactory.create(AppModule);
-  app.enableCors();
+  if (!app) {
+    const { AppModule } = require('./dist/app.module');
+    app = await NestFactory.create(AppModule);
+    app.enableCors({
+      origin: '*',
+      methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    });
+    await app.init();
+  }
   const instance = app.getHttpAdapter().getInstance();
-  return instance(req, res);
+  instance(req, res);
 };
