@@ -1,10 +1,11 @@
 const { NestFactory } = require('@nestjs/core');
+const path = require('path');
 
 let app;
 
 module.exports = async (req, res) => {
   if (!app) {
-    const { AppModule } = require('./dist/app.module');
+    const { AppModule } = require(path.join(__dirname, '..', 'dist', 'app.module'));
     app = await NestFactory.create(AppModule);
     app.enableCors({
       origin: '*',
