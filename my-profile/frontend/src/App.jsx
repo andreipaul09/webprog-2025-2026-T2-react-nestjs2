@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-const API_URL = 'https://webprog-2025-2026-t2-react-nestjs2-eswsru0gh.vercel.app/guestbook';
+const API_URL = 'https://webprog-2025-2026-t2-react-nestjs2-omega.vercel.app/guestbook';
 
 export default function App() {
   const [entries, setEntries] = useState([]);
